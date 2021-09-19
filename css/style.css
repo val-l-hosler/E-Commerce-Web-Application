@@ -1,0 +1,665 @@
+body {
+    background-image: url(../images/sprinkles.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: 'roboto', arial, sans-serif;
+    font-size: 1.25em;
+    margin: 0;
+}
+
+a {
+    color: #000000;
+    text-decoration: none;
+}
+
+footer {
+    border-top: 5px solid #21aeae;
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+}
+
+footer:hover, footer:focus {
+    color: #191919;
+}
+
+footer div {
+    background-color: #ffa69f;
+    border-radius: 20px;
+    color: #000000;
+    font-family: 'Lora', Georgia, serif;
+    font-size: 1.2em;
+    font-weight: bold;
+    line-height: 1.6em;
+    margin: 20px;
+    padding: 20px;
+    text-align: center;
+    width: calc(33vw - 40px);
+}
+
+footer div a:hover, footer div a:focus {
+    text-decoration: underline;
+}
+
+footer div:hover, footer div:focus {
+    background-color: #ff8377;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: #000000;
+    font-family: 'Lora', Georgia, serif;
+    font-size: 3em;
+    font-weight: bold;
+    margin: 0;
+    text-shadow: 1.5px 1.5px 1px #f8faff;
+}
+
+h1:hover, h1:focus {
+    color: #191919;
+    text-shadow: 2.5px 2.5px 1px #f8faff;
+}
+
+main {
+    margin: 0;
+    padding: 0;
+}
+
+h3 {
+    margin: 0 0 20px 0;
+    text-align: center;
+}
+
+nav {
+    background-color: #21aeae;
+}
+
+nav a {
+    color: #f8faff;
+    display: block;
+    font-family: 'Lora', Georgia, serif;
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 20px;
+    text-align: center;
+    width: calc(50vw - 52px);
+}
+
+nav a:hover, nav a:focus {
+    background-color: #17a0a0;
+}
+
+nav li {
+    list-style-type: none;
+}
+
+nav ul {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 0;
+    padding: 0;
+}
+
+/* I am using !important here to override the default styling of the button.
+However, I know !important is problematic and would only use it when absolutely necessary. */
+.addeventatc {
+    font-family: 'roboto', arial, sans-serif !important;
+    font-size: 1.5em !important;
+    margin: 0 0 40px 0;
+}
+
+.admin-content {
+    align-items: center;
+    background-color: #ffe4e2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+    min-height: calc(100vh - 157px);
+    padding: 40px 40px 0 40px;
+}
+
+.admin-content h2 {
+    margin: 0 0 40px 0;
+}
+
+.cart-container h2 {
+    margin: 0 0 40px 0;
+}
+
+.cart-container {
+    background-color: #f8faff;
+    border-radius: 20px;
+    margin: 0;
+    padding: 40px 40px 0 40px;
+    width: 50%;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-around;
+    margin: 0 0 40px 0;
+}
+
+.cart-item h3 {
+    text-align: left;
+}
+
+.cart-item img {
+    border: 3px solid #000000;
+    border-radius: 20px;
+    height: 150px;
+    margin: 0 40px 0 0;
+}
+
+.cart-item-name-price {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cart-item-right-col {
+    display: flex;
+    flex-basis: calc(100% - 150px);
+    flex-direction: column;
+    justify-content: center;
+}
+
+.checkout-button-container a, .order form input {
+    background-color: #21aeae;
+    border: 2px solid #000000;
+    border-radius: 20px;
+    color: #f8faff;
+    display: block;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 40px 0 40px 0;
+    padding: 20px;
+    text-align: center;
+}
+
+.checkout-button-container a:hover, .checkout-button-container a:focus,
+.order form input:hover, .order form input:focus {
+    background-color: #17a0a0;
+}
+
+.checkout-button-container h2 {
+    margin: 0;
+    padding: 20px;
+}
+
+.checkout-button-container input[type=submit] {
+    background-color: #21aeae;
+    border: 2px solid #000000;
+    border-radius: 20px;
+    color: #f8faff;
+    display: block;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 0 0 40px 0;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+.checkout-button-container input[type=submit]:hover, .checkout-button-container input[type=submit]:focus {
+    background-color: #17a0a0;
+}
+
+.cupcake-order {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 40px 0 40px;
+    padding: 0;
+}
+
+.cupcake-order form, .cart-item-right-col form {
+    font-size: 1em;
+    font-weight: bold;
+    margin: 0 0 40px 0;
+}
+
+.cupcake-order form input, .cart-item-right-col form input {
+    border: 2.5px solid #000000;
+    border-radius: 5px;
+    font-size: 1em;
+    padding: 5px;
+}
+
+.cupcake-order form input[type=number], .cart-item-right-col form input[type=number] {
+    margin: 0 0 5px 5px;
+    width: 50px;
+}
+
+.cupcake-order form input[type=submit], .cart-item-right-col form input[type=submit] {
+    background-color: #21aeae;
+    color: #f8faff;
+    font-weight: bold;
+    padding: 5px;
+}
+
+.cupcake-order form input[type=submit]:hover, .cupcake-order form input[type=submit]:focus,
+.cart-item-right-col form input[type=submit]:hover, .cart-item-right-col form input[type=submit]:focus {
+    background-color: #17a0a0;
+}
+
+.cupcake-order h3 {
+    font-size: 1em;
+}
+
+.cupcake-order img {
+    border: 3px solid #000000;
+    border-radius: 20px;
+    height: 250px;
+    margin-bottom: 20px;
+}
+
+.cupcake-order span {
+    color: #8b0000;
+    font-weight: bold;
+    margin: 0 0 20px 0;
+    text-align: center;
+}
+
+.cupcake-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin: 0;
+    width: 66%;
+}
+
+.expiration select {
+    border: 2.5px solid #000000;
+    border-radius: 5px;
+    font-size: 1em;
+    margin: 0 20px 40px 0;
+    padding: 5px;
+}
+
+.login {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    justify-content: center;
+    margin: 40px 0 40px 0;
+    max-height: 100%;
+    min-height: calc(100vh - 80px);
+}
+
+.login form {
+    background-color: #ffffff;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    font-size: 1em;
+    padding: 40px 40px 0 40px;
+    width: 50%;
+}
+
+.login form input {
+    font-size: 1em;
+    margin: 0 0 40px 0;
+    padding: 10px;
+}
+
+.login form label {
+    margin: 0 0 40px 0;
+}
+
+.login span {
+    color: #8b0000;
+    font-weight: bold;
+    margin: 0 0 40px 0;
+}
+
+.login-button {
+    background-color: #21aeae;
+    border-radius: 5px;
+    color: #ffffff;
+    border: 2px solid #000000;
+    font-size: 21px;
+    font-weight: bold;
+    margin: 0 40px 0 40px;
+    padding: 10px;
+    text-align: center;
+}
+
+.login-button:hover, .login-button:focus {
+    background-color: #17a0a0;
+}
+
+.login-div {
+    align-items: center;
+    display: flex;
+    grid-column: 2;
+    justify-content: flex-end;
+    padding: 0;
+    width: 75%;
+}
+
+.logo-container, .shopping-cart-container {
+    align-items: center;
+    display: flex;
+}
+
+.logo-container img {
+    margin-right: 20px;
+    height: 60px;
+}
+
+.main-content {
+    align-items: center;
+    background-color: #ffe4e2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+    padding: 40px;
+    min-height: calc(100vh - 439px);
+}
+
+.main-content-home {
+    align-items: center;
+    background-color: #ffe4e2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+    padding: 40px 40px 0 40px;
+}
+
+.main-content-menu {
+    background-color: #ffe4e2;
+    display: flex;
+    padding: 40px;
+}
+
+.main-content-menu nav {
+    background-color: #f8faff;
+    border-radius: 20px;
+    flex-basis: 25%;
+}
+
+.main-content-menu nav li {
+    color: #000000;
+    display: block;
+    font-family: 'Lora', Georgia, serif;
+    font-size: 1.25em;
+    font-weight: bold;
+    list-style-type: none;
+    padding: 40px;
+    text-align: left;
+    width: auto;
+}
+
+.main-content-menu nav li:hover, .main-content-menu nav li:focus {
+    border-radius: 20px;
+    background-color: #f0f4ff;
+    cursor: pointer;
+}
+
+.main-content-menu nav ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 0;
+}
+
+.main-content-menu-right {
+    align-items: center;
+    background-color: #f8faff;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    flex-basis: 75%;
+    margin: 0 0 0 40px;
+    padding: 40px;
+}
+
+.main-content-menu-right div {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content-menu-right div h2 {
+    margin: 0 0 40px 0;
+}
+
+.main-content-menu-right div h3 {
+    margin: 40px 0 0 0;
+}
+
+.main-content-menu-right div img {
+    border: 3px solid #000000;
+    border-radius: 20px;
+    width: 30%;
+}
+
+.main-content-menu-right div p {
+    font-size: 1em;
+    font-style: italic;
+    margin: 40px 0 0 0;
+    text-align: center;
+    width: 50%;
+}
+
+.order {
+    background-color: #f8faff;
+    border-radius: 20px;
+    margin: 0 0 40px 0;
+    padding: 40px;
+    width: 50%;
+}
+
+.order h3 {
+    margin: 0 0 40px 0;
+    text-align: left;
+}
+
+.order ul {
+    margin: 0;
+}
+
+.payment-order-container, .receipt-container, .summary-container {
+    background-color: #f8faff;
+    border-radius: 20px;
+    margin: 0;
+    padding: 40px 40px 0 40px;
+    width: 50%;
+}
+
+.payment-order-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.payment-order-container form label {
+    margin: 0 0 10px 0;
+}
+
+.payment-order-container form input[type=text], .payment-order-container form input[type=date],
+.payment-order-container form input[type=tel] {
+    border: 2.5px solid #000000;
+    border-radius: 5px;
+    font-size: 1em;
+    margin: 0 0 40px 0;
+    width: 50%;
+    padding: 5px;
+}
+
+.payment-order-container h2 {
+    margin: 0 0 40px 0;
+}
+
+.payment-order-container span {
+    color: #8b0000;
+    font-weight: bold;
+    margin: 0 0 40px 0;
+}
+
+.receipt-container h2 {
+    margin: 0 0 40px 0;
+    text-align: center;
+}
+
+.reminder-button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.shopping-cart-container a, .logout-container a {
+    align-items: center;
+    background-color: #ff9d96;
+    box-sizing: content-box;
+    border-radius: 20px;
+    display: flex;
+    padding: 20px;
+}
+
+.shopping-cart-container a:hover, .shopping-cart-container a:focus,
+.logout-container a:hover, .logout-container a:focus {
+    background-color: #ff8377;
+}
+
+.shopping-cart-container img {
+    margin-right: 20px;
+    height: 40px;
+}
+
+.shopping-cart-container h2, .logout-container h2 {
+    margin: 0;
+}
+
+.summary-container {
+    margin: 40px 0 0 0;
+}
+
+.summary-container h2 {
+    margin: 0 0 40px 0;
+}
+
+.summary-container-item, .receipt-container-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.summary-container-item h3, .receipt-container-item h3 {
+    margin: 0 0 40px 0;
+}
+
+.total-container-item {
+    border-top: 2px solid #000000;
+    display: flex;
+    justify-content: space-between;
+}
+
+.total-container-item h2 {
+    margin: 40px 0 0 0;
+}
+
+#card-cvv {
+    width: 10%;
+}
+
+#date, #phone {
+    width: 25%;
+}
+
+#carrot, #cinnamon, #mint, #rainbow, #red-velvet {
+    display: none;
+}
+
+#error-1, #error-2, #error-3, #error-4, #error-5, #error-6 {
+    display: none;
+}
+
+#success {
+    display: none;
+}
+
+@media (max-width: 1153px) {
+    footer {
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    footer div {
+        width: 75%;
+    }
+
+    .cart-item {
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        margin: 0;
+    }
+
+    .cart-item img {
+        height: 200px;
+        margin: 0 0 20px 0;
+        width: 200px;
+    }
+
+    #card-cvv {
+        width: 20%;
+    }
+
+    #date, #phone {
+        width: 35%;
+    }
+}
+
+@media (max-width: 800px) {
+    .expiration select {
+        width: 100%;
+    }
+
+    .payment-order-container form input[type=text], .payment-order-container form input[type=date],
+    .payment-order-container form input[type=tel] {
+        width: calc(100% - 16px);
+    }
+
+    .receipt-container-item {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .receipt-container-item h3 {
+        margin-right: 10px;
+    }
+
+    #card-cvv {
+        width: 50%;
+    }
+
+    #date, #phone {
+        width: 75%;
+    }
+}
+
+@media (max-width: 700px) {
+
+    header {
+        justify-content: center;
+    }
+
+    .cupcake-order form {
+        width: 155px;
+    }
+
+    #logo-container {
+        display: none;
+    }
+}
