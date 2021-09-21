@@ -21,4 +21,4 @@ This project was a beast to tackle. The most challenging part was making sure th
 4. PHP
 5. SQL
 
-<em>Note: In addition to my own CSS (style.css), I am also using normalize.css by Nicolas Gallagher. Also, none of the images are my own.</em>
+<em>Note: In addition to my CSS (style.css), I am also using normalize.css by Nicolas Gallagher. Also, none of the images are my own.</em>
