@@ -2,7 +2,7 @@
 
 This is my final project for INFSCI 1059, Web Programming. My project is a web application for a small bakery named Cupcakery. 	
 
-The application is not 100% responsive, as it only needed to be viewable on a desktop browser. However, while responsivity was not a requirement for the project, I tried to add some into the design/development.
+Though the project description did not require extensive styling or responsivity, I tried to make the web application as neat and user-friendly as possible with some responsive elements. **However, it is not 100% responsive, as the web application only needed to be viewable on a Google Chrome desktop browser**.
 
 The first service is a customer-facing website that includes a menu and the ability to purchase individual cupcakes. The second service is an administrator dashboard that displays information on the orders in progress and the completed orders. In addition, the administrator can update an order's status. 
 
