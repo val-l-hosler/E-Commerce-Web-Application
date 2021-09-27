@@ -2,10 +2,10 @@
 include 'admin_header.php';
 
 // If a user is not logged in, redirect them to admin_login.php
-if (isset($_SESSION['username'], $_SESSION['password'])) {
+if (!isset($_SESSION['username'], $_SESSION['password'])) {
     echo '
     <script>
-        window.location.href = "https://valeriehosler.com/Cupcakery-Test/admin_login.php";
+        window.location.href = "https://valeriehosler.com/Cupcakery/admin_login.php";
     </script>
     ';
 }
