@@ -1,7 +1,6 @@
 <?php
 include 'header.php';
 include 'get_counters.php';
-include 'db_connection.php';
 
 if (isset($_POST['name'])) {
     $name = $_POST['name'];
@@ -134,6 +133,7 @@ $flag_expiration = false;
 
                 return 'no error';
             }
+
             ?>
 
             <h2>Payment Information</h2>
@@ -371,48 +371,50 @@ $flag_expiration = false;
 
 <?php
 if (isset($final_name, $final_phone, $final_date, $final_card_name, $final_card_number, $final_cvv, $final_expiration_month, $final_expiration_year)) {
-
-    $final_name = addslashes($final_name);
-    $final_phone = addslashes($final_phone);
-    $final_date = addslashes($final_date);
-    $final_card_name = addslashes($final_card_name);
-    $final_cvv = addslashes($final_cvv);
-    $final_expiration_month = addslashes($final_expiration_month);
-    $final_expiration_year = addslashes($final_expiration_year);
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    $connection = mysqli_connect('localhost', 'valerjp1_cupcakery', 'Cupcakery123*', 'valerjp1_cupcakery');
 
     // Inserts the appropriate input values into the customer table
-    $insert_customer = "
-    INSERT INTO customer
-    (name, phone_number)
-    VALUES
-    ('" . $final_name . "', '" . $final_phone . "')
-    ;
-    ";
+    $stmt = mysqli_prepare($connection,
+        "INSERT INTO customer
+            (name, phone_number)
+            VALUES
+            (?, ?)");
 
-    $result_insert_customer = mysqli_query($connect, $insert_customer);
+    mysqli_stmt_bind_param($stmt, 'ss', $final_name, $final_phone);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
 
     // Gets the appropriate customer_id
     // Note: instead of just getting the most recent customer_id, I chose to add more filtering parameters to make sure it's the correct row
-    $query_get_customer_id = "SELECT customer_id FROM customer WHERE name = '" . $final_name . "' AND phone_number = '" . $final_phone . "' ORDER BY customer_id DESC LIMIT 1;";
-    $result_get_customer_id = mysqli_query($connect, $query_get_customer_id) or die("Error: cannot show table");
-    $customer_id = mysqli_fetch_row($result_get_customer_id)[0];
+    $stmt2 = mysqli_prepare($connection, "SELECT customer_id FROM customer WHERE name = ? AND phone_number = ? ORDER BY customer_id DESC LIMIT 1");
+    mysqli_stmt_bind_param($stmt2, 'ss', $final_name, $final_phone);
+    mysqli_stmt_execute($stmt2);
+    mysqli_stmt_bind_result($stmt2, $customer_id);
+    mysqli_stmt_fetch($stmt2);
+    mysqli_stmt_close($stmt2);
 
     // Inserts the appropriate input values into the cupcake_order table
-    $insert_order = "
-    INSERT INTO cupcake_order
-    (card_name, card_number, card_cvv, card_expiration_month, card_expiration_year, pickup_date, status, fk_customer_id)
-    VALUES
-    ('" . $final_card_name . "', '" . $final_card_number . "', '" . $final_cvv . "', '" . $final_expiration_month . "', '" . $final_expiration_year . "', '" . $final_date . "', 'false', " . $customer_id . ")
-    ;
-    ";
+    $stmt3 = mysqli_prepare($connection,
+        "INSERT INTO cupcake_order
+            (card_name, card_number, card_cvv, card_expiration_month, card_expiration_year, pickup_date, status, fk_customer_id)
+            VALUES
+            (?, ?, ?, ?, ?, ?, 'false', ?)");
 
-    $result_insert_order = mysqli_query($connect, $insert_order);
+    mysqli_stmt_bind_param($stmt3, 'ssssssi', $final_card_name, $final_card_number, $final_cvv, $final_expiration_month, $final_expiration_year, $final_date, $customer_id);
+    mysqli_stmt_execute($stmt3);
+    mysqli_stmt_close($stmt3);
 
     // Gets the appropriate order_id
     // Note: instead of just getting the most recent order_id, I chose to add more filtering parameters to make sure it's the correct row
-    $query_get_order_id = "SELECT cupcake_order_id FROM cupcake_order WHERE card_name = '" . $final_card_name . "' AND card_number = '" . $final_card_number . "' AND pickup_date = '" . $final_date . "' ORDER BY cupcake_order_id DESC LIMIT 1;";
-    $result_get_order_id = mysqli_query($connect, $query_get_order_id) or die("Error: cannot show table");
-    $order_id = mysqli_fetch_row($result_get_order_id)[0];
+    $stmt4 = mysqli_prepare($connection, "SELECT cupcake_order_id FROM cupcake_order WHERE card_name = ? AND card_number = ? AND pickup_date = ? ORDER BY cupcake_order_id DESC LIMIT 1");
+    mysqli_stmt_bind_param($stmt4, 'sss', $final_card_name, $final_card_number, $final_date);
+    mysqli_stmt_execute($stmt4);
+    mysqli_stmt_bind_result($stmt4, $order_id);
+    mysqli_stmt_fetch($stmt4);
+    mysqli_stmt_close($stmt4);
+
+    // This is used for the receipt redirection
     $_SESSION['order_id'] = $order_id;
 
     if ($berry_counter > 0) {
@@ -439,14 +441,12 @@ if (isset($final_name, $final_phone, $final_date, $final_card_name, $final_card_
         query_order_item($red_velvet_counter, $order_id, 6);
     }
 
-    mysqli_close($connect);
-
     echo '
     <script>
     // This displays the success h2 and redirects to clear_session.php after 3 seconds
     document.getElementById("success").style.display = "block";
     let timeout_id = setTimeout(() => {
-            window.location.href = "https://valeriehosler.com/Cupcakery/clear_session.php";
+            window.location.href = "https://valeriehosler.com/Cupcakery-Test/clear_session.php";
             window.clearTimeout(timeout_id);
     }, 3000);
     </script>
@@ -455,19 +455,19 @@ if (isset($final_name, $final_phone, $final_date, $final_card_name, $final_card_
 
 function query_order_item($counter, $id, $fk_id)
 {
-    include 'db_connection.php';
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    $connection = mysqli_connect('localhost', 'valerjp1_cupcakery', 'Cupcakery123*', 'valerjp1_cupcakery');
 
-    // This inserts the appropriate values into the cupcake_order_item table
-    $insert_cupcake = "
-        INSERT INTO cupcake_order_item
-        (quantity_purchased, fk_cupcake_order_id, fk_item_id)
-        VALUES
-        (" . $counter . ", " . $id . ", $fk_id)
-        ; 
-        ";
+    // Inserts the appropriate input values into the cupcake_order_item table
+    $stmt = mysqli_prepare($connection,
+        "INSERT INTO cupcake_order_item
+            (quantity_purchased, fk_cupcake_order_id, fk_item_id)
+            VALUES
+            (?, ?, ?)");
 
-    mysqli_query($connect, $insert_cupcake);
-    mysqli_close($connect);
+    mysqli_stmt_bind_param($stmt, 'iii', $counter, $id, $fk_id);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
 }
 
 ?>

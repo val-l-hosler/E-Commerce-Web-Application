@@ -1,36 +1,43 @@
 <?php
-
 include 'admin_header.php';
-include 'db_connection.php';
 
 // If a user is not logged in, redirect them to admin_login.php
 if (!isset($_SESSION['username']) && !isset($_SESSION['password'])) {
     header('Location: admin_login.php');
 }
 
-// This gets the order ids for the completed orders
-$query_get_complete_order_ids = "SELECT cupcake_order_id FROM cupcake_order WHERE status='true' ORDER BY pickup_date ASC;";
-$result_get_complete_order_ids = mysqli_query($connect, $query_get_complete_order_ids) or die("Error: cannot show table");
-$complete_order_ids = [];
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+$connection = mysqli_connect('localhost', 'valerjp1_cupcakery', 'Cupcakery123*', 'valerjp1_cupcakery');
 
-foreach ($result_get_complete_order_ids as $val) {
-    foreach ($val as $v) {
-        $complete_order_ids[] = $v;
+// This gets the order ids for the completed orders
+$stmt = mysqli_prepare($connection,
+    "SELECT cupcake_order_id FROM cupcake_order WHERE status='true' ORDER BY pickup_date");
+
+mysqli_stmt_execute($stmt);
+$result1 = mysqli_stmt_get_result($stmt);
+
+while ($row = mysqli_fetch_array($result1, MYSQLI_NUM)) {
+    foreach ($row as $r) {
+        $complete_order_ids[] = $r;
     }
 }
+
+mysqli_stmt_close($stmt);
 
 // This gets the order ids for the orders in progress
-$query_get_incomplete_order_ids = "SELECT cupcake_order_id FROM cupcake_order WHERE status='false' ORDER BY pickup_date ASC;";
-$result_get_incomplete_order_ids = mysqli_query($connect, $query_get_incomplete_order_ids) or die("Error: cannot show table");
-$incomplete_order_ids = [];
+$stmt2 = mysqli_prepare($connection,
+    "SELECT cupcake_order_id FROM cupcake_order WHERE status='false' ORDER BY pickup_date");
 
-foreach ($result_get_incomplete_order_ids as $val) {
-    foreach ($val as $v) {
-        $incomplete_order_ids[] = $v;
+mysqli_stmt_execute($stmt2);
+$result2 = mysqli_stmt_get_result($stmt2);
+
+while ($row = mysqli_fetch_array($result2, MYSQLI_NUM)) {
+    foreach ($row as $r) {
+        $incomplete_order_ids[] = $r;
     }
 }
 
-mysqli_close($connect);
+mysqli_stmt_close($stmt2);
 
 function create_completed_order($order_id)
 {
@@ -42,7 +49,8 @@ function create_completed_order($order_id)
 function create_order_in_progress($order_id)
 {
     // I needed to include the db connection inside functions that used it (just including it globally didn't work)
-    include 'db_connection.php';
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    $connection = mysqli_connect('localhost', 'valerjp1_cupcakery', 'Cupcakery123*', 'valerjp1_cupcakery');
 
     get_order_info($order_id);
 
@@ -58,65 +66,66 @@ function create_order_in_progress($order_id)
 
     if (isset($_POST[$id])) {
         // This updates the row in the SQL table
-        $query_update_order_item = "UPDATE cupcake_order SET status = 'true' WHERE cupcake_order_id = " . $order_id . ";";
-        mysqli_query($connect, $query_update_order_item) or die('Error: cannot show table');
+        $stmt = mysqli_prepare($connection,
+            "UPDATE cupcake_order SET status = 'true' WHERE cupcake_order_id = ?");
+
+        mysqli_stmt_bind_param($stmt, 'i', $order_id);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
 
         // This refreshes the page
         echo '<meta http-equiv="refresh" content="0">';
     }
-
-    mysqli_close($connect);
 }
 
 function get_order_info($order_id)
 {
     // I needed to include the db connection inside functions that used it (just including it globally didn't work)
-    include 'db_connection.php';
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    $connection = mysqli_connect('localhost', 'valerjp1_cupcakery', 'Cupcakery123*', 'valerjp1_cupcakery');
 
     // This gets the order info needed for the UI
-    $query_get_order_info = "SELECT name, pickup_date FROM customer INNER JOIN cupcake_order ON customer_id = fk_customer_id WHERE cupcake_order_id = " . $order_id . ";";
-    $result_get_order_info = mysqli_query($connect, $query_get_order_info) or die('Error: cannot show table');
-    $name = '';
-    $pickup_date = '';
-    $count = 0;
+    $stmt = mysqli_prepare($connection,
+        "SELECT name, pickup_date FROM customer INNER JOIN cupcake_order ON customer_id = fk_customer_id WHERE cupcake_order_id = ?");
 
-    foreach ($result_get_order_info as $val) {
-        foreach ($val as $v) {
-            if ($count === 0) {
-                $name = $v;
-            } else {
-                $pickup_date = $v;
-            }
-            $count += 1;
-        }
-    }
+    mysqli_stmt_bind_param($stmt, 'i', $order_id);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_bind_result($stmt, $name, $pickup_date);
+    mysqli_stmt_fetch($stmt);
+    mysqli_stmt_close($stmt);
 
     // This updates the date format for the UI so it's more user-friendly
     $new_date_format = date('m-d-Y', strtotime($pickup_date));
     $pickup_date = $new_date_format;
 
     // This gets the order item info needed for the UI
-    $query_get_order_items = "SELECT name, quantity_purchased FROM item INNER JOIN cupcake_order_item ON item_id = fk_item_id WHERE fk_cupcake_order_id = " . $order_id . ";";
-    $result_get_order_items = mysqli_query($connect, $query_get_order_items) or die('Error: cannot show table');
-    $items = [];
+    $stmt2 = mysqli_prepare($connection,
+        "SELECT name, quantity_purchased FROM item INNER JOIN cupcake_order_item ON item_id = fk_item_id WHERE fk_cupcake_order_id = ?");
 
-    foreach ($result_get_order_items as $val) {
-        $count2 = 0;
+    mysqli_stmt_bind_param($stmt2, 'i', $order_id);
+    mysqli_stmt_execute($stmt2);
+    $result2 = mysqli_stmt_get_result($stmt2);
+
+    $items = [];
+    while ($row = mysqli_fetch_array($result2, MYSQLI_NUM)) {
+        $count = 0;
         $item_name = '';
         $quantity_purchased = '';
 
-        foreach ($val as $v) {
-            if ($count2 === 0) {
-                $item_name = $v;
+        foreach ($row as $r) {
+            if ($count === 0) {
+                $item_name = $r;
             } else {
-                $quantity_purchased = $v;
+                $quantity_purchased = $r;
             }
-            $count2 += 1;
+            $count += 1;
         }
 
         $concat = '' . $quantity_purchased . ' ' . $item_name . '(s)';
         $items[] = $concat;
     }
+
+    mysqli_stmt_close($stmt2);
 
     echo '
         <div class="order">
@@ -131,8 +140,6 @@ function get_order_info($order_id)
     foreach ($items as $val) {
         echo '<li>' . $val . '</li>';
     }
-
-    mysqli_close($connect);
 }
 
 ?>

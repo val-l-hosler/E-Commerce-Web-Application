@@ -1,38 +1,37 @@
 <?php
-
 include 'header.php';
-include 'db_connection.php';
 
 // This is the order id that was passed in from checkout.php
 $id = (int)$_GET['order_id'];
 
-// This gets the order id info needed for the UI
-$query_get_order = "SELECT cupcake_order_id, pickup_date FROM cupcake_order WHERE cupcake_order_id = " . $id . ";";
-$result_get_order = mysqli_query($connect, $query_get_order) or die("Error: cannot show table");
-$order_id = '';
-$pickup_date = '';
-$count = 0;
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+$connection = mysqli_connect('localhost', 'valerjp1_cupcakery', 'Cupcakery123*', 'valerjp1_cupcakery');
 
-foreach ($result_get_order as $val) {
-    foreach ($val as $v) {
-        if ($count === 0) {
-            $order_id = $v;
-        } else {
-            $pickup_date = $v;
-        }
-        $count += 1;
-    }
-}
+// This gets the order id info needed for the UI
+$stmt = mysqli_prepare($connection,
+    "SELECT cupcake_order_id, pickup_date FROM cupcake_order WHERE cupcake_order_id = ?");
+
+mysqli_stmt_bind_param($stmt, 'i', $id);
+mysqli_stmt_execute($stmt);
+mysqli_stmt_bind_result($stmt, $order_id, $pickup_date);
+mysqli_stmt_fetch($stmt);
+mysqli_stmt_close($stmt);
 
 // This updates the date format for the UI so it's more user-friendly
 $ui_date_format = date('m-d-Y', strtotime($pickup_date));
 
 // This gets the total for all the items in the order which will be used in the UI
-$query_get_total = "SELECT sum(quantity_purchased) FROM cupcake_order INNER JOIN cupcake_order_item ON cupcake_order_id = fk_cupcake_order_id WHERE cupcake_order_id = " . $id . ";";
-$result_get_total = mysqli_query($connect, $query_get_total) or die("Error: cannot show table");
-$total = number_format((mysqli_fetch_row($result_get_total)[0] * 3.50), 2);
+$stmt2 = mysqli_prepare($connection,
+    "SELECT sum(quantity_purchased) FROM cupcake_order INNER JOIN cupcake_order_item ON cupcake_order_id = fk_cupcake_order_id WHERE cupcake_order_id = ?");
 
-mysqli_close($connect);
+mysqli_stmt_bind_param($stmt2, 'i', $id);
+mysqli_stmt_execute($stmt2);
+mysqli_stmt_bind_result($stmt2, $total);
+mysqli_stmt_fetch($stmt2);
+mysqli_stmt_close($stmt2);
+
+$total = number_format(($total * 3.50), 2);
+
 ?>
 
     <main class="main-content">
