@@ -2,8 +2,12 @@
 include 'admin_header.php';
 
 // If a user is not logged in, redirect them to admin_login.php
-if (!isset($_SESSION['username']) && !isset($_SESSION['password'])) {
-    header('Location: admin_login.php');
+if (isset($_SESSION['username'], $_SESSION['password'])) {
+    echo '
+    <script>
+        window.location.href = "https://valeriehosler.com/Cupcakery-Test/admin_login.php";
+    </script>
+    ';
 }
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);

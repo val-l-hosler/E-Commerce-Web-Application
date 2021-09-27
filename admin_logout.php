@@ -1,5 +1,4 @@
 <?php
-
 session_id('admin');
 session_start();
 // This destroys the admin session, but not the customer session

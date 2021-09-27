@@ -3,7 +3,11 @@ include 'admin_header.php';
 
 // If the user is logged in, redirect them to admin_dashboard.php
 if (isset($_SESSION['username'], $_SESSION['password'])) {
-    header('Location: admin_dashboard.php');
+    echo '
+    <script>
+        window.location.href = "https://valeriehosler.com/Cupcakery/admin_dashboard.php";
+    </script>
+    ';
 }
 
 if (isset($_POST['username'])) {
@@ -83,10 +87,10 @@ $sticky_flag_password = false;
                     $_SESSION['password'] = $final_password;
 
                     echo '
-                <script>
-                    window.location.href = "https://valeriehosler.com/Cupcakery/logging_in.php";
-                </script>
-                ';
+                    <script>
+                        window.location.href = "https://valeriehosler.com/Cupcakery/logging_in.php";
+                    </script>
+                    ';
 
                 } else {
                     echo '<span style="text-align: center;">Error: username and/or password are incorrect</span>';

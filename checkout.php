@@ -446,7 +446,7 @@ if (isset($final_name, $final_phone, $final_date, $final_card_name, $final_card_
     // This displays the success h2 and redirects to clear_session.php after 3 seconds
     document.getElementById("success").style.display = "block";
     let timeout_id = setTimeout(() => {
-            window.location.href = "https://valeriehosler.com/Cupcakery-Test/clear_session.php";
+            window.location.href = "https://valeriehosler.com/Cupcakery/clear_session.php";
             window.clearTimeout(timeout_id);
     }, 3000);
     </script>

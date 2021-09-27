@@ -1,5 +1,4 @@
 <?php
-
 include 'header.php';
 include 'get_counters.php';
 

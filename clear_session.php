@@ -1,5 +1,4 @@
 <?php
-
 session_id('customer');
 session_start();
 
