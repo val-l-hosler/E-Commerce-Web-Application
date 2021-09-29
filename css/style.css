@@ -13,7 +13,7 @@ a {
 }
 
 footer {
-    border-top: 5px solid #21aeae;
+    border-top: 5px solid #177D7D;
     display: flex;
     justify-content: space-between;
     padding: 0;
@@ -66,18 +66,18 @@ h1:hover, h1:focus {
     text-shadow: 2.5px 2.5px 1px #f8faff;
 }
 
-main {
-    margin: 0;
-    padding: 0;
-}
-
 h3 {
     margin: 0 0 20px 0;
     text-align: center;
 }
 
+main {
+    margin: 0;
+    padding: 0;
+}
+
 nav {
-    background-color: #21aeae;
+    background-color: #177D7D;
 }
 
 nav a {
@@ -92,7 +92,7 @@ nav a {
 }
 
 nav a:hover, nav a:focus {
-    background-color: #17a0a0;
+    background-color: #136767;
 }
 
 nav li {
@@ -171,7 +171,7 @@ However, I know !important is problematic and would only use it when absolutely 
 }
 
 .checkout-button-container a, .order form input {
-    background-color: #21aeae;
+    background-color: #177D7D;
     border: 2px solid #000000;
     border-radius: 20px;
     color: #f8faff;
@@ -185,7 +185,7 @@ However, I know !important is problematic and would only use it when absolutely 
 
 .checkout-button-container a:hover, .checkout-button-container a:focus,
 .order form input:hover, .order form input:focus {
-    background-color: #17a0a0;
+    background-color: #136767;
 }
 
 .checkout-button-container h2 {
@@ -194,7 +194,7 @@ However, I know !important is problematic and would only use it when absolutely 
 }
 
 .checkout-button-container input[type=submit] {
-    background-color: #21aeae;
+    background-color: #177D7D;
     border: 2px solid #000000;
     border-radius: 20px;
     color: #f8faff;
@@ -208,7 +208,7 @@ However, I know !important is problematic and would only use it when absolutely 
 }
 
 .checkout-button-container input[type=submit]:hover, .checkout-button-container input[type=submit]:focus {
-    background-color: #17a0a0;
+    background-color: #136767;
 }
 
 .cupcake-order {
@@ -239,7 +239,7 @@ However, I know !important is problematic and would only use it when absolutely 
 }
 
 .cupcake-order form input[type=submit], .cart-item-right-col form input[type=submit] {
-    background-color: #21aeae;
+    background-color: #177D7D;
     color: #f8faff;
     font-weight: bold;
     padding: 5px;
@@ -247,7 +247,7 @@ However, I know !important is problematic and would only use it when absolutely 
 
 .cupcake-order form input[type=submit]:hover, .cupcake-order form input[type=submit]:focus,
 .cart-item-right-col form input[type=submit]:hover, .cart-item-right-col form input[type=submit]:focus {
-    background-color: #17a0a0;
+    background-color: #136767;
 }
 
 .cupcake-order h3 {
@@ -322,7 +322,7 @@ However, I know !important is problematic and would only use it when absolutely 
 }
 
 .login-button {
-    background-color: #21aeae;
+    background-color: #177D7D;
     border-radius: 5px;
     color: #ffffff;
     border: 2px solid #000000;
@@ -334,7 +334,7 @@ However, I know !important is problematic and would only use it when absolutely 
 }
 
 .login-button:hover, .login-button:focus {
-    background-color: #17a0a0;
+    background-color: #136767;
 }
 
 .login-div {
